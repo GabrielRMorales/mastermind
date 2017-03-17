@@ -1,6 +1,7 @@
-#4 color options
 class Mastermind
-  def initialize
+  attr_accessor :feedback, :counter
+  attr_reader :colors, :answer
+  def initialize()
     @colors=["GREEN","BLUE","RED","YELLOW"]
     @answer=[]
     @feedback=[]
@@ -8,7 +9,7 @@ class Mastermind
     4.times do
       @answer<<@colors.sample
     end
-    puts @answer
+    
   end
 
   def game_on()    
@@ -17,10 +18,12 @@ class Mastermind
     puts "Choose from #{@colors}"
     guess_arr=user_input()
     compare(guess_arr)
-    puts feed_back(guess_arr)
+    puts ""
+    feed_back(guess_arr)
     @counter+=1
     end
     puts "Game over"
+    puts "Answer was #{@answer}"
   end
 
   def user_input()
@@ -37,27 +40,39 @@ class Mastermind
     if @answer==arr
       puts "Player wins!"
       @counter=12
-    end
-    #add restart ability
-    
+    end    
   end
-
+  #consider using numeric feedback ie "2 choices wrong, 1 right"
   def feed_back(arr)
     @feedback=[]
     i=0
+    g=0
+    j=0
+    copy=[]
+    
+    4.times do 
+    copy<<@answer[g]
+    g+=1
+    end
+    puts "Answer is #{@answer}"
+    puts "Copy is #{copy}"
     while i<4 do
-      if arr.include? (@answer[i])
-        if @answer[i]==arr[i]
-          @feedback<<"Black"
-        elsif @answer[i]!=arr[i]
-          @feedback<<"White"
-        end
-      arr[i]=""
-      end
-      
+      if copy[i]==arr[i]
+        @feedback<<"Black"
+        copy[i]=""
+        arr[i]="#" 
+      end     
       i+=1
     end
-    @feedback
+
+    while j<4 do
+      if copy.include? (arr[j])
+        copy[copy.index(arr[j])]=nil
+        @feedback<<"White"                    
+      end
+      j+=1
+    end
+    puts "#{@feedback}"
   end
 
 end
