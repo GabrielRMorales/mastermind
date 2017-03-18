@@ -47,15 +47,9 @@ class Mastermind
     @feedback=[]
     i=0
     g=0
-    j=0
-    copy=[]
-    
-    4.times do 
-    copy<<@answer[g]
-    g+=1
-    end
-    puts "Answer is #{@answer}"
-    puts "Copy is #{copy}"
+    j=0   
+    copy=@answer.clone
+    #puts "Copy is #{copy}"
     while i<4 do
       if copy[i]==arr[i]
         @feedback<<"Black"
